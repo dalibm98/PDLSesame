@@ -3,85 +3,111 @@ package com.PDL.Sesame.controleur;
 import com.PDL.Sesame.model.*;
 import com.PDL.Sesame.service.UserService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
-@RequestMapping("/api/users")
-@Api(tags = "Utilisateurs")
+@RequestMapping("/users")
+@Api(value = "UserController", tags = { "User" })
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "Créer un nouvel utilisateur")
-    @PostMapping("")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    @ApiOperation(value = "Register new user", response = User.class)
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+        User registeredUser = userService.register(user);
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    }
+/*
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestParam(required = true) String email, @RequestParam String password) {
+        User user = userService.login(email, password);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @ApiOperation(value = "Obtenir tous les utilisateurs")
-    @GetMapping("")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+
+ */
+
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getMot_de_passe();
+
+        User user = userService.login(email, password);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @ApiOperation(value = "Obtenir un utilisateur par ID")
+
+    @ApiOperation(value = "Get all users", response = List.class)
+    @GetMapping("/")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get user by ID", response = User.class)
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Mettre à jour un utilisateur par ID")
+    @ApiOperation(value = "Update user", response = User.class)
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Supprimer un utilisateur par ID")
+    @ApiOperation(value = "Delete user")
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "Valider un utilisateur par ID et jeton")
-    @GetMapping("/{id}/validate")
-    public void validateUser(@PathVariable Long id, @RequestParam String token) {
-        userService.validateUser(id, token);
+    @ApiOperation(value = "Get current user", response = User.class)
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser() {
+        User user = userService.getCurrentUser();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Changer le mot de passe d'un utilisateur par ID")
-    @PutMapping("/{id}/password")
-    public void changePassword(@PathVariable Long id, @RequestParam String oldPassword, @RequestParam String newPassword) {
-        userService.changePassword(id, oldPassword, newPassword);
+    @ApiOperation(value = "Add question", response = User.class)
+    @PostMapping("/questions")
+    public ResponseEntity<User> addQuestion(@RequestBody Question question) {
+        User user = userService.addQuestion(question);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Ajouter une question pour un utilisateur par ID")
-    @PostMapping("/{id}/questions")
-    public User addQuestion(@PathVariable Long id, @RequestBody Question question) {
-        return userService.addQuestion(id, question);
+    @ApiOperation(value = "Add réponse", response = User.class)
+    @PostMapping("/reponses")
+    public ResponseEntity<User> addReponse(@RequestBody Reponse reponse) {
+        User user = userService.addReponse(reponse);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Ajouter une réponse pour un utilisateur par ID")
-    @PostMapping("/{id}/reponses")
-    public User addReponse(@PathVariable Long id, @RequestBody Reponse reponse) {
-        return userService.addReponse(id, reponse);
-    }
-
-    @ApiOperation(value = "Ajouter une notification pour un utilisateur par ID")
-    @PostMapping("/{id}/notifications")
-    public User addNotification(@PathVariable Long id, @RequestBody Notification notification) {
-        return userService.addNotification(id, notification);
-    }
-
-    @ApiOperation(value = "Obtenir tous les utilisateurs par rôle")
+    @ApiOperation(value = "Get users by role", response = List.class)
     @GetMapping("/roles/{role}")
-    public List<User> getUsersByRole(@PathVariable RoleEnum role) {
-        return userService.getUsersByRole(role);
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable RoleEnum role) {
+        List<User> users = userService.getUsersByRole(role);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
 }

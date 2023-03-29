@@ -44,9 +44,8 @@ public class User {
     @OneToMany(mappedBy = "auteur")
 
     private List<Reponse> reponses;
-
-    @Column(nullable = false)
-    private boolean isEnabled;
-    private String token;
-
+   // @Column(nullable = false)
+  // private boolean isEnabled;
+   // @Column(name = "token")
+   // private String token;
 }

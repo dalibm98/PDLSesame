@@ -3,7 +3,6 @@ package com.PDL.Sesame.controleur;
 import com.PDL.Sesame.model.NatureQuestion;
 import com.PDL.Sesame.service.NatureQuestionService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
