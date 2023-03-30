@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User register(User user);
+  //  User register(User user);
     Optional<User> findByEmail(String email);
-
-    User login(String email, String password);
+/*
+  //  User login(String email, String password);
 
     List<User> getAllUsers();
 
@@ -28,4 +28,6 @@ public interface UserService {
     User addReponse(Reponse reponse);
 
     List<User> getUsersByRole(RoleEnum roleEnum);
+
+ */
 }

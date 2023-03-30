@@ -1,25 +1,12 @@
 package com.PDL.Sesame.service;
 
-import com.PDL.Sesame.Exception.ResourceNotFoundException;
-
-import com.PDL.Sesame.dao.RoleDao;
-import com.PDL.Sesame.dao.UserDao;
-import com.PDL.Sesame.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import java.util.List;
-import java.util.Optional;
-
 
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl  {
+
+    /* implements UserService {
 
     @Autowired
     private UserDao userDao;
@@ -31,6 +18,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
+
+
 
     @Override
     public User register(User user) {
@@ -46,6 +35,8 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+
 
 
     @Override
@@ -82,7 +73,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userDao.delete(user);
     }
-
     @Override
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -95,6 +85,20 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+
+
+    @Override
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
+            return (User) authentication.getPrincipal();
+        }
+        return null;
+    }
+
+
+
 
 
     @Override
@@ -122,5 +126,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return userDao.findByEmail(email);
+
+
     }
+
+
+
+
+
+
+
+     */
+
+
 }

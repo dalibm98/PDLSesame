@@ -2,7 +2,7 @@ package com.PDL.Sesame.controleur;
 
 import com.PDL.Sesame.model.NatureQuestion;
 import com.PDL.Sesame.service.NatureQuestionService;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ public class NatureQuestionController {
     private NatureQuestionService natureQuestionService;
 
 
-    @ApiOperation(value = "Récupérer toutes les questions de nature")
+  //  @ApiOperation(value = "Récupérer toutes les questions de nature")
     @GetMapping
     public List<NatureQuestion> getAllNatureQuestions() {
         return natureQuestionService.getAllNatureQuestions();
     }
 
-    @ApiOperation(value = "Récupérer une question de nature par son id")
+   // @ApiOperation(value = "Récupérer une question de nature par son id")
     @GetMapping("/{id}")
     public ResponseEntity<NatureQuestion> getNatureQuestionById(@PathVariable Long id) {
         Optional<NatureQuestion> natureQuestion = natureQuestionService.getNatureQuestionById(id);
@@ -35,13 +35,13 @@ public class NatureQuestionController {
         }
     }
 
-    @ApiOperation(value = "Créer une question de nature")
+   // @ApiOperation(value = "Créer une question de nature")
     @PostMapping
     public NatureQuestion createNatureQuestion(@RequestBody NatureQuestion natureQuestion) {
         return natureQuestionService.saveNatureQuestion(natureQuestion);
     }
 
-    @ApiOperation(value = "Mettre à jour une question de nature par son id")
+  //  @ApiOperation(value = "Mettre à jour une question de nature par son id")
     @PutMapping("/{id}")
     public ResponseEntity<NatureQuestion> updateNatureQuestion(@PathVariable Long id, @RequestBody NatureQuestion natureQuestion) {
         Optional<NatureQuestion> existingNatureQuestion = natureQuestionService.getNatureQuestionById(id);
@@ -54,7 +54,7 @@ public class NatureQuestionController {
     }
 
 
-    @ApiOperation(value = "Supprimer une question de nature par son id")
+   // @ApiOperation(value = "Supprimer une question de nature par son id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNatureQuestionById(@PathVariable Long id) {
         Optional<NatureQuestion> existingNatureQuestion = natureQuestionService.getNatureQuestionById(id);
