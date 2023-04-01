@@ -25,4 +25,5 @@ public class NatureQuestion {
     @JsonIgnore
     @OneToMany(mappedBy = "nature")
     private List<Question> questions;
+
 }
