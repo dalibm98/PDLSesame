@@ -35,12 +35,13 @@ public class Question {
     @JsonIgnore
     @OneToMany(mappedBy = "question")
     private List<Reponse> reponses;
-    @JsonIgnore
+
     @ManyToOne
-    @JoinColumn(name = "id_nature_question")
+   @JoinColumn(name = "id_nature_question")
     private NatureQuestion nature;
-    @JsonIgnore
+
     @ManyToOne
+    @JoinColumn(name = "id_domaine_question")
     private DomaineQuestion domaine;
 
     @Column(name = "is_answered")
